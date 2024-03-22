@@ -40,172 +40,68 @@ function generatePlaylist(guardians, songs) {
 
 const divPlaylist = document.getElementById('playlists');
 
-    // "first" variable to store an array of objects in songs array,that have the same genre vlaue as the Star-Lord.
-    let first = songs.map(song => {
+//get an array of the guardian names
+let guadins_list = Object.keys(guardians);
 
-        // check which object has Star-Lord's genre
-        if(song.genre == guardians["Star-Lord"]){
-           const art = song.artist
-           const title = song.title
 
-           // return an array of arrays that contain title string and artist string
-            return[ `${title}`, ` by ${art}`]
+let guardians_playlist = guadins_list.map(item => {
+    
+    //store playlist array for each guadian
+    let playlist = songs.map(song => {
+
+        if(song.genre == guardians[item]){
+
+            let title = song.title;
+            let artist = song.artist;
+
+            return[`${title} `,` by ${artist}`]
         }
-
-        // return undefined if not true
-        return 
-       
-    });
-
-
-    // filter out undefined values in "first" array
-    const first_filtered = first.filter(item => item !== undefined);
-
-    const div1 = document.createElement('div');
-    div1.classList.add('playlist');
-    const pn = document.createElement('h3');
-    pn.innerText = 'Star-Lord';
-    div1.appendChild(pn);
-
-    
-    for(let i = 0;i < first_filtered.length;i++){
-       const p = document.createElement('p');
-       const span = document.createElement('span');
-       span.classList.add('song-title');
-
-       //place the title string in the span element created
-       span.innerText = first_filtered[i][0];
-       
-       //add the artist string and 
-       p.appendChild(span);
-       p.innerHTML += first_filtered[i][1];
-       div1.appendChild(p);
-    }
-    
-    divPlaylist.appendChild(div1);
-
-    
-    //repeat the above steps but store in different variables for each guardian
-    let second = songs.map(song => {
-        if(song.genre == guardians.Gamora){
-           let art = song.artist
-           let title = song.title
-            return[ `${title}`, ` by ${art}`]
-        }
-    });
-
-    const second_filtered = second.filter(item => item !== undefined);
-
-    const div2 = document.createElement('div');
-    div2.classList.add('playlist');
-    const pn2 = document.createElement('h3');
-    pn2.innerText = 'Gamora';
-    div2.appendChild(pn2);
-
-    for(let i = 0;i < second_filtered.length;i++){
-       const p = document.createElement('p');
-       const span = document.createElement('span');
-       span.classList.add('song-title');
-       span.innerText = second_filtered[i][0];
-       p.appendChild(span);
-       p.innerHTML += second_filtered[i][1];
-       div2.appendChild(p);
-    }
-    
-    divPlaylist.appendChild(div2);
-
-
-
-    let third = songs.map(song => {
-        if(song.genre == guardians.Drax){
-           let art = song.artist
-           let title = song.title
-            return [ `${title}`, ` by ${art}`]
-        }
-    });
-
-    const third_filtered = third.filter(item => item !== undefined);
-
-    const div3 = document.createElement('div');
-    div3.classList.add('playlist');
-    const pn3 = document.createElement('h3');
-    pn3.innerText = 'Drax';
-    div3.appendChild(pn3);
-    
-    for(let i = 0;i < third_filtered.length;i++){
-       const p = document.createElement('p');
-       const span = document.createElement('span');
-       span.classList.add('song-title');
-       span.innerText = third_filtered[i][0];
-       p.appendChild(span);
-       p.innerHTML += third_filtered[i][1];
-       div3.appendChild(p);
-    }
      
-    divPlaylist.appendChild(div3);
+        return
+    })
 
-    let fourth = songs.map(song => {
-        if(song.genre == guardians.Rocket){
-           let art = song.artist
-           let title = song.title
-            return [ `${title}`, ` by ${art}`]
-        }
-    });
+     // filter out the "undefined"
+    let playlist_filtered = playlist.filter(item => item !== undefined)
 
-    const fourth_filtered = fourth.filter(item => item !== undefined);
-
-    const div4 = document.createElement('div');
-    div4.classList.add('playlist');
-    const pn4 = document.createElement('h3');
-    pn4.innerText = 'Rocket';
-    div4.appendChild(pn4);
-    
-    for(let i = 0;i < fourth_filtered.length;i++){
-       const p = document.createElement('p');
-       const span = document.createElement('span');
-       span.classList.add('song-title');
-       span.innerText = fourth_filtered[i][0];
-       p.appendChild(span);
-       p.innerHTML += fourth_filtered[i][1];
-       div4.appendChild(p);
-    }
-    
-    divPlaylist.appendChild(div4);
+    //store array containing guardian name and the filtered playlist array
+    return [item,playlist_filtered]
+})
 
 
+  //loop through the guardian_playlist array to display the playlists to the DOM
+  for(let i = 0;i < guardians_playlist.length;i++){
+
+       let divplay = document.createElement('div');
+       divplay.classList.add('playlist');
+       
+       let name = document.createElement('h2');
+       //name of guadian 
+       name.innerText = guardians_playlist[i][0];
+       divplay.appendChild(name);
 
 
-    let fifth = songs.map(song => {
-        if(song.genre == guardians.Groot){
-           let art = song.artist
-           let title = song.title
-            return [ `${title}`, ` by ${art}`]
-        }
-    });
+       //loop through the playlist_filtered array to display song title and artist to the DOM
+       for(let j = 0;j < guardians_playlist[i][1].length;j++ ){
 
-    const fifth_filtered = fifth.filter(item => item !== undefined);
+        let p_playlist = document.createElement('p');
+        let span = document.createElement('span');
+        span.classList.add('song-title');
+        span.innerText = guardians_playlist[i][1][j][0];
 
-    const div5 = document.createElement('div');
-    div5.classList.add('playlist');
-    const pn5 = document.createElement('h3');
-    pn5.innerText = 'Groot';
-    div5.appendChild(pn5);
-    
-    for(let i = 0;i < fifth_filtered.length;i++){
-       const p = document.createElement('p');
-       const span = document.createElement('span');
-       span.classList.add('song-title');
-       span.innerText = fifth_filtered[i][0];
-       p.appendChild(span);
-       p.innerHTML += fifth_filtered[i][1];
-       div5.appendChild(p);
-    }
-    
-    divPlaylist.appendChild(div5);
+        p_playlist.appendChild(span);
+        p_playlist.innerHTML += guardians_playlist[i][1][j][1];
 
-   
+        divplay.appendChild(p_playlist);
+
+        divPlaylist.appendChild(divplay);
+
+       }
+
+       
 
 
+
+  }
 
 
 }
